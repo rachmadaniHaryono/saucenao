@@ -30,6 +30,16 @@ setup(name=about['__title__'],
           ],
           'titlesearch': [
               'titlesearch>=0.0.1'
+          ],
+          'server': [
+            'Flask-Admin>=1.5.0',
+            'Flask-SQLAlchemy>=2.3.1',
+            'Flask-WTF>=0.14.2',
+            'Flask>=0.12.2',
+            'SQLAlchemy-Utils>=0.32.18',
           ]
       },
+      entry_points={'console_scripts': [
+        'saucenao-server = saucenao.server:cli',
+      ]},
       zip_safe=True)

@@ -1,0 +1,30 @@
+{% extends 'admin/base.html' %}
+{% block head %}
+{{super()}}
+<link rel="shortcut icon" href="#" />
+{% endblock %}
+{% block body %}
+<form method="POST" action="{{url_for('admin.index')}}" enctype="multipart/form-data">
+  <div class="form-group"> {{ index_form.upload.label }} {{ index_form.upload(class_="form-control") }} </div>
+  <div class="checkbox">
+    <label>{{index_form.combine_api_types(type='checkbox')}}{{index_form.combine_api_types.label}}</label></div>
+  <div class="form-group"> {{ index_form.output_type.label }} {{ index_form.output_type(class_="form-control") }} </div>
+  <div class="form-group"> {{ index_form.minimum_similarity.label }} {{ index_form.minimum_similarity(class_="form-control") }} </div>
+  <button type="submit" class="btn btn-default">Search</button>
+</form>
+{% if entry %}
+<table class="table table-bordered">
+  <tr><th>Similarity</th><th>Entry</th></tr>
+  {% for result in entry.results %}
+    <tr>
+      <td>{{result.similarity}}</td>
+      <td>
+        <div> <b>Title</b> {{result.title.value}} </div>
+        <div> <b>Contents</b> <ul>{% for content in result.contents %}<li>{{content.value|replace('\n\n', '\n')|replace('\n', '<br/>')|safe}}</li>{% endfor %}</ul> </div>
+        <div> <b>External Urls</b> <ul>{% for ext_url in result.external_urls %}<li>{{ext_url.value}}</li>{% endfor %}</ul> </div>
+      </td>
+    </tr>
+  {% endfor %}
+</table>
+{% endif %}
+{% endblock %}
